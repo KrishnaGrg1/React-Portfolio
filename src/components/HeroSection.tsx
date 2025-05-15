@@ -160,7 +160,7 @@ export default function HeroSection() {
           </div>
 
           {/* Right Side: Smooth Transition Media */}
-          <div className="relative flex-1 w-full md:max-w-md max-w-xs mx-auto h-[500px] overflow-hidden">
+          <div className="relative flex-1 w-full max-w-xs md:max-w-md mx-auto aspect-[4/5] sm:aspect-video">
             <AnimatePresence mode="wait">
               {currentMedia && (
                 <motion.div
@@ -191,10 +191,6 @@ export default function HeroSection() {
               )}
             </AnimatePresence>
           </div>
-
-
-
-
 
         </div>
       </div>
