@@ -1,20 +1,25 @@
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowDown, Github, Linkedin, Mail, Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function HeroSection() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const mediaItems = [
+    { type: "video", src: "/dashboard.mp4" },
+    { type: "image", src: "/dashboard.png" },
+    { type: "video", src: "/dashboard1.mp4" },
+    { type: "image", src: "/dashboard1.png" }
+  ];
 
   useEffect(() => {
-    // Basic canvas animation setup
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // Set canvas size to match parent
     const resizeCanvas = () => {
       const parent = canvas.parentElement;
       if (parent) {
@@ -23,22 +28,16 @@ export default function HeroSection() {
       }
     };
 
-    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener("resize", resizeCanvas);
     resizeCanvas();
 
-    // Create particles
-    const particles: {
-      x: number;
-      y: number;
-      size: number;
-      speedX: number;
-      speedY: number;
-      color: string;
-    }[] = [];
+    const particles = [];
 
     const createParticles = () => {
-      const particleCount = Math.min(50, Math.floor(canvas.width * canvas.height / 8000));
-
+      const particleCount = Math.min(
+        50,
+        Math.floor((canvas.width * canvas.height) / 8000)
+      );
       for (let i = 0; i < particleCount; i++) {
         particles.push({
           x: Math.random() * canvas.width,
@@ -53,36 +52,31 @@ export default function HeroSection() {
 
     createParticles();
 
-    // Animation loop
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      particles.forEach(particle => {
-        ctx.fillStyle = particle.color;
+      particles.forEach((p) => {
+        ctx.fillStyle = p.color;
         ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fill();
 
-        // Update position
-        particle.x += particle.speedX;
-        particle.y += particle.speedY;
+        p.x += p.speedX;
+        p.y += p.speedY;
 
-        // Wrap around edges
-        if (particle.x < 0) particle.x = canvas.width;
-        if (particle.x > canvas.width) particle.x = 0;
-        if (particle.y < 0) particle.y = canvas.height;
-        if (particle.y > canvas.height) particle.y = 0;
+        if (p.x < 0) p.x = canvas.width;
+        if (p.x > canvas.width) p.x = 0;
+        if (p.y < 0) p.y = canvas.height;
+        if (p.y > canvas.height) p.y = 0;
       });
 
-      // Draw connections between nearby particles
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-
-          if (distance < 100) {
-            ctx.strokeStyle = `rgba(100, 255, 218, ${0.1 * (1 - distance / 100)})`;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 100) {
+            ctx.strokeStyle = `rgba(100, 255, 218, ${0.1 * (1 - dist / 100)})`;
             ctx.lineWidth = 0.5;
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
@@ -92,18 +86,22 @@ export default function HeroSection() {
         }
       }
 
-      requestAnimationFrame(animate);
+      animationId = requestAnimationFrame(animate);
     };
 
-    const animationId = requestAnimationFrame(animate);
+    let animationId = requestAnimationFrame(animate);
+    const intervalId = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % mediaItems.length);
+    }, 5000);
 
-    // Cleanup
     return () => {
-      window.removeEventListener('resize', resizeCanvas);
+      window.removeEventListener("resize", resizeCanvas);
       cancelAnimationFrame(animationId);
+      clearInterval(intervalId);
     };
   }, []);
 
+  const currentMedia = mediaItems[currentIndex];
   return (
     <section id="home" className="relative mt-10 md:mt-25 min-h-screen flex items-center overflow-hidden">
       <canvas ref={canvasRef} className="absolute inset-0 z-0" />
@@ -161,15 +159,27 @@ export default function HeroSection() {
           </div>
 
           {/* Right Side: Image */}
-          <div className="flex-1 w-full  opacity-0 animate-fade-in animation-delay-600
-                md:max-w-md max-w-xs mx-auto">
-            <video
-              src="/dashboard.mp4"
-              autoPlay
-              loop
-              muted
-              className="w-full max-w-full h-auto rounded-2xl shadow-lg object-cover"
-            />
+          <div
+            className="flex-1 w-full opacity-0 animate-fade-in animation-delay-600
+        md:max-w-md max-w-xs mx-auto"
+          >
+            {currentMedia.type === "video" ? (
+              <video
+                key={currentMedia.src}
+                src={currentMedia.src}
+                autoPlay
+                loop
+                muted
+                className="w-full max-w-full h-auto rounded-2xl shadow-lg object-cover"
+              />
+            ) : (
+              <img
+                key={currentMedia.src}
+                src={currentMedia.src}
+                alt="Preview"
+                className="w-full max-w-full h-auto rounded-2xl shadow-lg object-cover"
+              />
+            )}
           </div>
         </div>
       </div>
