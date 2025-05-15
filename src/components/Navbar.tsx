@@ -55,7 +55,7 @@ export default function Navbar() {
         <div className="text-xl font-bold text-primary">
           <a href="#home" className="flex items-center gap-2 font-heading">
             <span className="text-teal">&lt;</span>
-            Portfolio
+            Krishna
             <span className="text-teal">/&gt;</span>
           </a>
         </div>
