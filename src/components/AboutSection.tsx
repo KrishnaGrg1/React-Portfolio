@@ -6,7 +6,7 @@ export default function AboutSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
-  
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -19,22 +19,22 @@ export default function AboutSection() {
       },
       { threshold: 0.1 }
     );
-    
+
     if (sectionRef.current) {
       observer.observe(sectionRef.current);
     }
-    
+
     return () => {
       if (sectionRef.current) {
         observer.unobserve(sectionRef.current);
       }
     };
   }, []);
-  
+
   return (
-    <section 
+    <section
       ref={sectionRef}
-      id="about" 
+      id="about"
       className="py-20 md:py-32 bg-secondary/50 dark:bg-navy-light/30"
     >
       <div className="container mx-auto px-4">
@@ -42,41 +42,45 @@ export default function AboutSection() {
           <span className="text-teal font-mono">01.</span> About Me
           <div className="h-px bg-border flex-grow ml-4"></div>
         </h2>
-        
+
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div 
+          <div
             ref={contentRef}
             className="opacity-0"
           >
             <div className="prose dark:prose-invert prose-lg max-w-none">
               <p>
-                Hello! My name is Krishna Bahadur Gurung, and I enjoy creating things that live on the 
-                internet. My interest in web development started back in 2012 when I decided 
-                to try editing custom Tumblr themes — turns out hacking together a custom 
-                reblog button taught me a lot about HTML & CSS!
+                Hello! I’m Krishna Bahadur Gurung, a passionate web
+                developer who discovered the joy of coding during my
+                5th semester of BCA. What began as curiosity soon turned
+                into a full-blown passion for building clean and functional web apps.
               </p>
               <p>
-                Fast-forward to today, and I've had the privilege of working at an advertising 
-                agency, a start-up, a huge corporation, and a student-led design studio. My 
-                main focus these days is building accessible, inclusive products and digital 
-                experiences at a top tech company for a variety of clients.
+                I’ve worked on several hands-on projects—from movie platforms
+                and dashboards to full-stack apps using the MERN stack. I enjoy
+                creating user-friendly interfaces and writing logic that works seamlessly behind the scenes.
               </p>
+              <p>
+                These days, I’m exploring new technologies, frameworks, and programming
+                languages to grow stronger in my career and become a better developer every day.
+              </p>
+
               <p>
                 Here are a few technologies I've been working with recently:
               </p>
             </div>
-            
+
             <ul className="grid grid-cols-2 gap-x-4 gap-y-2 mt-4 text-sm font-mono">
               {[
-                "JavaScript (ES6+)", 
-                "TypeScript", 
-                "React", 
-                "Next.js", 
+                "JavaScript (ES6+)",
+                "TypeScript",
+                "React",
+                "Next.js",
                 "Node.js",
                 "Tailwind CSS"
               ].map((tech, index) => (
-                <li 
-                  key={tech} 
+                <li
+                  key={tech}
                   className="flex items-center gap-2"
                 >
                   <span className="text-teal">▹</span> {tech}
@@ -84,8 +88,8 @@ export default function AboutSection() {
               ))}
             </ul>
           </div>
-          
-          <div 
+
+          <div
             ref={imageRef}
             className="opacity-0 animation-delay-200"
           >
@@ -93,7 +97,7 @@ export default function AboutSection() {
               <div className="relative z-10 overflow-hidden rounded-md">
                 <div className="aspect-square bg-slate-light/20 rounded-md flex items-center justify-center">
                   <span className="text-5xl font-bold text-slate-light/40">
-                   <img src="portfolio.jpg" alt="" />
+                    <img src="portfolio.jpg" alt="" />
                   </span>
                 </div>
                 <div className="absolute inset-0 bg-teal/20 hover:bg-transparent transition-colors duration-300"></div>
