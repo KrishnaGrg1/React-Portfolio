@@ -105,13 +105,13 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center overflow-hidden">
+    <section id="home" className="relative mt-10 md:mt-25 min-h-screen flex items-center overflow-hidden">
       <canvas ref={canvasRef} className="absolute inset-0 z-0" />
       <div className="container mx-auto px-4 z-10">
         {/* <div className="max-w-3xl"> */}
-        <div className="flex flex-row md:flex-row items-center gap-8">
+        <div className="flex flex-col md:flex-row items-center gap-8">
           {/* Left Side: Text Content */}
-          <div className="flex-1 max-w-3xl ">
+          <div className="flex-1 max-w-full md:max-w-3xl px-4 md:px-0">
             <p className="text-teal mb-4 font-mono opacity-0 animate-fade-in">
               Hi, my name is
             </p>
@@ -161,13 +161,14 @@ export default function HeroSection() {
           </div>
 
           {/* Right Side: Image */}
-          <div className="flex-1 w-full max-w-md opacity-0 animate-fade-in animation-delay-600">
+          <div className="flex-1 w-full  opacity-0 animate-fade-in animation-delay-600
+                md:max-w-md max-w-xs mx-auto">
             <video
-              src="/dashboard.mp4" // correct video file
+              src="/dashboard.mp4"
               autoPlay
               loop
               muted
-              className="w-full h-auto rounded-2xl shadow-lg object-cover"
+              className="w-full max-w-full h-auto rounded-2xl shadow-lg object-cover"
             />
           </div>
         </div>
