@@ -11,7 +11,8 @@ export default function HeroSection() {
     { type: "video", src: "/dashboard.mp4" },
     { type: "image", src: "/dashboard.png" },
     { type: "video", src: "/dashboard1.mp4" },
-    { type: "image", src: "/dashboard1.png" }
+    { type: "image", src: "/dashboard1.png" },
+     { type: "video", src: "/dashboard2.mp4" },
   ];
 
   useEffect(() => {
@@ -160,7 +161,7 @@ export default function HeroSection() {
           </div>
 
           {/* Right Side: Smooth Transition Media */}
-          <div className="relative flex-1 w-full max-w-xs md:max-w-md mx-auto aspect-[4/5] sm:aspect-video">
+          <div className="relative w-[50%] max-w-md sm:max-w-lg md:max-w-3xl mx-auto aspect-video sm:aspect-[25/16] rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
             <AnimatePresence mode="wait">
               {currentMedia && (
                 <motion.div
@@ -170,6 +171,7 @@ export default function HeroSection() {
                   exit={{ opacity: 0, scale: 0.98 }}
                   transition={{ duration: 1.5, ease: "easeInOut" }}
                   className="absolute inset-0 w-full h-full"
+                  whileHover={{ scale: 1.03 }}  // subtle scale on hover
                 >
                   {currentMedia.type === "video" ? (
                     <video
@@ -178,19 +180,21 @@ export default function HeroSection() {
                       loop
                       muted
                       playsInline
-                      className="w-full h-full object-cover rounded-2xl shadow-lg"
+                      className="w-full h-full object-cover"
                     />
                   ) : (
                     <img
                       src={currentMedia.src}
                       alt="Hero media"
-                      className="w-full h-full object-cover rounded-2xl shadow-lg"
+                      className="w-full h-full object-cover"
+                      loading="lazy" // lazy loading
                     />
                   )}
                 </motion.div>
               )}
             </AnimatePresence>
           </div>
+
 
         </div>
       </div>
