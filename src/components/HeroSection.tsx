@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowDown, Github, Linkedin, Mail, Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function HeroSection() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -158,29 +159,43 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Right Side: Image */}
-          <div
-            className="flex-1 w-full opacity-0 animate-fade-in animation-delay-600
-        md:max-w-md max-w-xs mx-auto"
-          >
-            {currentMedia.type === "video" ? (
-              <video
-                key={currentMedia.src}
-                src={currentMedia.src}
-                autoPlay
-                loop
-                muted
-                className="w-full max-w-full h-auto rounded-2xl shadow-lg object-cover"
-              />
-            ) : (
-              <img
-                key={currentMedia.src}
-                src={currentMedia.src}
-                alt="Preview"
-                className="w-full max-w-full h-auto rounded-2xl shadow-lg object-cover"
-              />
-            )}
+          {/* Right Side: Smooth Transition Media */}
+          <div className="relative flex-1 w-full md:max-w-md max-w-xs mx-auto h-[500px] overflow-hidden">
+            <AnimatePresence mode="wait">
+              {currentMedia && (
+                <motion.div
+                  key={currentMedia.src}
+                  initial={{ opacity: 0, scale: 1.02 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.98 }}
+                  transition={{ duration: 1.5, ease: "easeInOut" }}
+                  className="absolute inset-0 w-full h-full"
+                >
+                  {currentMedia.type === "video" ? (
+                    <video
+                      src={currentMedia.src}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="w-full h-full object-cover rounded-2xl shadow-lg"
+                    />
+                  ) : (
+                    <img
+                      src={currentMedia.src}
+                      alt="Hero media"
+                      className="w-full h-full object-cover rounded-2xl shadow-lg"
+                    />
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
+
+
+
+
+
         </div>
       </div>
 
