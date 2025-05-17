@@ -21,6 +21,11 @@ const skills: Skill[] = [
     category: "frontend",
   },
   {
+    name:"Tailwind CSS",
+    icon:"https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
+    category:"frontend"
+  },
+  {
     name: "JavaScript",
     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
     category: "languages",
